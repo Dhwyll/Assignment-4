@@ -1,23 +1,10 @@
-// Hangman JavaScript
+// Psychic JavaScript
 // This game at this point does no validity checking
 // Thus, you can duplicate guesses and try non-letter guesses
 // This would be simple to do with some input handling, but that's not really the point of this exercise, is it?
 // Maybe when I get the other homework done
 
-// Functions first
-
-function randLetter() {
-
-var letters =
-    ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
-
-var letter = letters[Math.floor(Math.random()*letters.length)];
-
-return letter
-
-}
-
-// Variables second
+// Variables First
 
 var refUserChoice = document.getElementById("userChoice");						// Reference to the User's Choice to make the code line a bit smaller
 var refTaunts = document.getElementById("taunts");								// Reference to the Taunts section to make the code line a bit smaller
@@ -29,11 +16,27 @@ var computerChoice = randLetter();												// Computer chooses a letter
 var choiceTally = [];
 var wins = 0;
 var losses = 0;
-console.log("Before starting, Computer Choice is " + computerChoice);
+console.log("Computer Choice is " + computerChoice);
+
+
+
+// Functions Second
+
+function randLetter() {
+
+	var letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
+
+	return (letters[Math.floor(Math.random()*letters.length)]);
+
+}
+
+
 
 // Start the game
+
 document.onkeyup = function(event) {
-	var userGuess = event.key;													// Get the user's guess
+	var userGuess = String.fromCharCode(event.keyCode).toLowerCase();			// Get the user's guess
+	console.log("User pressed " + userGuess);
 	choiceTally.push(userGuess);												// Push the user's guess onto Choice Tally
 
 	if (choiceTally.length === 9) {												// If the number of guesses is 8...
@@ -44,7 +47,7 @@ document.onkeyup = function(event) {
 			choiceTally = [];													// Clear the Choice Tally...
 			refGuessesMade.innerHTML = choiceTally;								// And push to page...
 			computerChoice = randLetter();										// Get a new Computer Choice...
-console.log("Before starting, Computer Choice is " + computerChoice);
+			console.log("Computer Choice is " + computerChoice);
 			refGuessesLeft.innerHTML = 9;										// And reset Guesses Left.
 		}
 
@@ -52,7 +55,7 @@ console.log("Before starting, Computer Choice is " + computerChoice);
 				refGameLosses.innerHTML = ++losses;								// Increment the Losses and push to page...
 				refTaunts.innerHTML = "You lose! &nbsp;Try again!"				// Uupdate Taunt...
 				computerChoice = randLetter();									// Get a new Computer Choice...
-console.log("Before starting, Computer Choice is " + computerChoice);
+				console.log("Computer Choice is " + computerChoice);
 				choiceTally = [];												// Clear the Choice Tally...
 				refGuessesMade.innerHTML = choiceTally;							// And push to page...
 				refGuessesLeft.innerHTML = 9;									// And reset Guesses Left.
@@ -67,7 +70,7 @@ console.log("Before starting, Computer Choice is " + computerChoice);
 				choiceTally = [];												// Clear the Choice Tally...
 				refGuessesMade.innerHTML = choiceTally;							// And push to page...
 				computerChoice = randLetter();									// Get a new Computer Choice...
-console.log("Before starting, Computer Choice is " + computerChoice);
+				console.log("Computer Choice is " + computerChoice);
 				refGuessesLeft.innerHTML = 9;									// And reset Guesses Left.
 			}
 			else {																// Otherwise...

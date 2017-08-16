@@ -1,0 +1,103 @@
+<!doctype HTML>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>The Hangman Game</title>
+		<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+	</head>
+	
+	<body>
+		<audio id="soundToPlay" autoplay>
+			<source src="assets/sounds/Main-Theme.mp3" type="audio/mpeg">
+			Your browser does not support audio
+		</audio>
+		<div class="topScroll">
+			<!-- ALL CREDIT FOR THE SCROLLING TEXT GOES TO 
+			Craig Buckler
+			http://www.sitepoint.com/css3-starwars-scrolling-text/ 
+			-->
+		
+
+
+			<p id="start">A short time ago in a browser very, very close&hellip;</p>
+
+			<h1>HANGMAN<sub>Star Wars Edition</sub></h1>
+
+			<div id="titles">
+				<div id="titlecontent">
+
+					<p class="center">ASSIGNMENT IV<br />
+						A NEW HOPE FOR JAVASCRIPT</p>
+
+					<p>It is a period for being swamped with homework.  A brave student has decided to use STAR WARS as his theme for the game of HANGMAN.</p>
+
+					<p>Striking any key to begin playing, you are charged with identifying which character has been chosen.</p>
+
+					<p>You have 15 guesses (LOWERCASE LETTERS ONLY) before you are fed to the Sarlacc where you will be digested over thousands of years.</p>
+
+					<p class="center">View the source, Luke!</p>
+  
+					<p class="center">HAN SHOT FIRST!</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="characterNameBlock">
+			<span id="characterName">Hello</span>
+		</div>
+		
+			<div id="leftSide">
+				Hello
+			</div>
+			<div id="rightSide">
+
+				<!-- Top Information -->
+				<div class="gameBlock">
+					Press any key to get started!
+				</div>
+				
+				<!-- Win Block -->
+				<div class="gameBlock">
+					WINS:  <span id="gameWins"></span>
+				</div>
+				
+				<!-- Current Word Title Block -->
+				<div class="gameBlock">
+					Current Word
+				</div>
+				
+				<!-- Results Block -->
+				<div class="gameBlock">
+					<span id="wordResults"></span>
+				</div>
+				
+				<!-- Guesses Remaining Title Block -->
+				<div class="gameBlock">
+					Number of Guesses Remaining
+				</div>
+				
+				<!-- Guesses Remaining Block -->
+				<div class="gameBlock">
+					<span id="guessesRemaining"></span>
+				</div>
+
+				<!-- Guess List Title Block -->
+				<div class="gameBlock">
+					Letters Already Guessed
+				</div>
+				
+				<!-- Guess List Block -->
+				<div class="gameBlock">
+					<span id="lettersGuessed"></span>
+				</div>
+				
+			</div>
+
+		<script src="assets/javascript/game.js"></script>
+	</body>
+</html>
+
+
+
+
