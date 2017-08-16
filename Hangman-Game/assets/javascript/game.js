@@ -45,9 +45,16 @@
 
 
 var refWordResults = document.getElementById("wordResults");
+var refLettersGuessed = document.getElementById("lettersGuessed");
+var refGuessesRemaining = document.getElementById("guessesRemaining");
+var refCharacterName = document.getElementById("characterName");
+var refGameWins = document.getElementById("gameWins");
 var computerWord = randWord();													// Computer chooses a character
 console.log("The computer chose " + computerWord);
+var workingArray = [];
+var guessArray = [];
 var guessesLeft = 15;															// Start with 15 guesses
+var wins = 0;
 
 
 
@@ -73,96 +80,140 @@ function isGuessLegit(letterGuess) {
 }
 
 
+function pushWorkingArray () {
+	refWordResults.innerHTML = "";
+	for (i=0; i < workingArray.length; i++) {
+		refWordResults.innerHTML = refWordResults.innerHTML + "&nbsp;" + workingArray[i];
+	}
+
+}
+
+
+function pushLettersGuessed () {
+	refLettersGuessed.innerHTML = "";
+	for (i=0; i < guessArray.length; i++) {
+		refLettersGuessed.innerHTML = refLettersGuessed.innerHTML + "&nbsp;" + guessArray[i];
+	}
+}
+
+
 function setupWorkingSection(challengeWord) {												// This function sets the Working Section to dashes
+
+	workingArray = [];
 
 	for (i=0; i < challengeWord.length; i++) {												// For each letter in the word...
 		if (challengeWord.charAt(i) === " ") {												// Check to see if it's a space...
-			refWordResults.innerHTML = refWordResults.innerHTML + "&nbsp;&nbsp;&nbsp;";		// If so, put in a space...
+			workingArray.push(" ");															// If so, put in a space...
 		}
 			else {
-				refWordResults.innerHTML = refWordResults.innerHTML + "_&nbsp;";			// Otherwise, put in a blank.
+				workingArray.push("_");														// Otherwise, put in a blank.
 			}
 	}
+	
+	pushWorkingArray();
+
 }
 
 function isGuessInWord(checkLetter, challengeWord) {										// This functions determines if the letter is in the word
-	
-}
-
-
-
-// Start the game
-
-
-
-
-setupWorkingSection(computerWord);														// Set up the Working Section
-
-document.onkeyup = function(event) {
-	var userGuess = event.key;															// Get the user's guess
-	if (isGuessLegit(userGuess)) {														// If it's a lowercase letter
-		console.log("userGuess " + userGuess + " is " + isGuessLegit(userGuess));
-		
+	for (i=0; i < challengeWord.length; i++) {
+		if (challengeWord.charAt(i).toLowerCase() === checkLetter) {
+			workingArray[i] = challengeWord.charAt(i);
+		}
 	}
 	
+	pushWorkingArray();
 }
 
 
-// var refUserChoice = document.getElementById("userChoice");						// Reference to the User's Choice to make the code line a bit smaller
-// var refTaunts = document.getElementById("taunts");								// Reference to the Taunts section to make the code line a bit smaller
-// var refGuessesMade = document.getElementById("guessesMade");					// Reference to the Guesses Made list to make the code line a bit smaller
-// var refGuessesLeft = document.getElementById("guessesLeft");					// Reference to the Guesses Left to make the code line a bit smaller
-// var refGameWins = document.getElementById("gameWins");							// Reference to the Game Wins to make the3 code line a bit smaller
-// var refGameLosses = document.getElementById("gameLosses");						// Reference to the Game Losses to make the3 code line a bit smaller
-// var computerChoice = randLetter();												// Computer chooses a letter
-// var choiceTally = [];
-// var wins = 0;
-// var losses = 0;
-// console.log("Before starting, Computer Choice is " + computerChoice);
+function isGuessInLettersGuessed(checkLetter, letterArray) {
+	var gotAHit = false;
+	for (i=0; (!gotAHit && (i < letterArray.length)); i++) {
+		if (letterArray[i] === checkLetter) {
+			gotAHit = true;
+		}
+	}
+	return gotAHit;
+}
+
+function putGuessInArray(guessLetter) {
+	guessArray.push(guessLetter);
+	
+	pushLettersGuessed();
+}
+
+function didTheyGuessRight() {
+	var gotItRight = true;
+	for (i=0; (gotItRight && (i < computerWord.length)); i++) {
+		if (computerWord[i] !== workingArray[i]) {
+			gotItRight = false;
+		}
+	}
+	return gotItRight;
+}
+
+function resetGame() {
+	computerWord = randWord();
+	setupWorkingSection(computerWord);
+	guessArray=[];
+	pushLettersGuessed();
+	guessesLeft = 15;
+	refGuessesRemaining.innerHTML = guessesLeft;
+}
+
+
 
 // Start the game
-// document.onkeyup = function(event) {
-	// var userGuess = event.key;													// Get the user's guess
-	// choiceTally.push(userGuess);												// Push the user's guess onto Choice Tally
 
-	// if (choiceTally.length === 9) {												// If the number of guesses is 8...
-		// if (userGuess === computerChoice) {										// Then if the user guessed correctly...
-			// refTaunts.innerHTML = "You read my mind! &nbspI was thinking "
-				// + computerChoice + "!";											// Say you won...
-			// refGameWins.innerHTML = ++wins;										// Increment the Wins and push to page...
-			// choiceTally = [];													// Clear the Choice Tally...
-			// refGuessesMade.innerHTML = choiceTally;								// And push to page...
-			// computerChoice = randLetter();										// Get a new Computer Choice...
-// console.log("Before starting, Computer Choice is " + computerChoice);
-			// refGuessesLeft.innerHTML = 9;										// And reset Guesses Left.
-		// }
 
-			// else {																// Then you lost...
-				// refGameLosses.innerHTML = ++losses;								// Increment the Losses and push to page...
-				// refTaunts.innerHTML = "You lose! &nbsp;Try again!"				// Uupdate Taunt...
-				// computerChoice = randLetter();									// Get a new Computer Choice...
-// console.log("Before starting, Computer Choice is " + computerChoice);
-				// choiceTally = [];												// Clear the Choice Tally...
-				// refGuessesMade.innerHTML = choiceTally;							// And push to page...
-				// refGuessesLeft.innerHTML = 9;									// And reset Guesses Left.
-		
-			// }
-	// }
-		// else {
-			// if (userGuess === computerChoice) {									// If the user guessed correctly...
-				// refTaunts.innerHTML = "You read my mind! &nbspI was thinking "
-					// + computerChoice + "!";										// Say you won...
-				// refGameWins.innerHTML = ++wins;									// Increment the Wins and push to page...
-				// choiceTally = [];												// Clear the Choice Tally...
-				// refGuessesMade.innerHTML = choiceTally;							// And push to page...
-				// computerChoice = randLetter();									// Get a new Computer Choice...
-// console.log("Before starting, Computer Choice is " + computerChoice);
-				// refGuessesLeft.innerHTML = 9;									// And reset Guesses Left.
-			// }
-			// else {																// Otherwise...
-				// refGuessesMade.innerHTML = choiceTally;							// Display the new Choice Tally
-				// refTaunts.innerHTML = "You're picking up static."				// Taunt the user
-				// refGuessesLeft.innerHTML = 9 - choiceTally.length;				// Decrement Guesses Left and push to page
-			// }
-		// }
-// }
+
+document.onkeyup = function(event) {
+	setupWorkingSection(computerWord);														// Set up the Working Section
+
+	document.onkeyup = function(event) {
+		var userGuess = event.key;															// Get the user's guess
+		if (isGuessLegit(userGuess) && !isGuessInLettersGuessed(userGuess, guessArray) && guessesLeft !== 0) {	// If it's a lowercase letter and not in list
+			putGuessInArray(userGuess);
+			isGuessInWord(userGuess, computerWord);
+			refGuessesRemaining.innerHTML = --guessesLeft;
+			console.log ("Did they guess right? " + didTheyGuessRight());
+			if (didTheyGuessRight()) {
+				if (computerWord[0] === "P") {
+					refCharacterName.innerHTML = "Princess Leia"
+					// update leftSide with Princess Leia
+					// Play Leia sound
+				}
+					else if (computerWord[0] === "Q") {
+						refCharacterName.innerHTML = "Queen Amidala"
+						// update leftSide with Queen Amidala
+						// Play Amidala sound
+					}
+						else if (computerWord[0] === "L") {
+							refCharacterName.innerHTML = "Luke Skywalker"
+							// update leftSide with Luke Skywalker
+							// Play Luke sound
+						}
+							else if (computerWord[0] === "C") {
+								refCharacterName.innerHTML = "Chewbacca"
+								// update leftSide with Chewbacca
+								// Play Chewbacca sound
+							}
+								else if (computerWord[0] == "D") {
+									refCharacterName.innerHTML = "Darth Vader"
+									// update leftSide with Darth Vader
+									// Play Vader sound
+								}
+									else {
+										refCharacterName.innerHTML = "Boba Fett"
+										// update leftSide with Boba Fett
+										// Play Boba sound
+									}
+				refGameWins.innerHTML = ++wins;
+				resetGame();
+			}
+				else if (guessesLeft === 0) {
+					refCharacterName.innerHTML = "No!";
+					resetGame();
+				}
+		}
+	}
+}
