@@ -2,6 +2,7 @@
 // This game at this point does no validity checking
 // Thus, you can duplicate guesses and try non-letter guesses
 // This would be simple to do with some input handling, but that's not really the point of this exercise, is it?
+// Maybe when I get the other homework done
 
 // Functions first
 
