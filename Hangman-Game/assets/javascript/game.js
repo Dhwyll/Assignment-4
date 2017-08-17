@@ -49,6 +49,10 @@ var refLettersGuessed = document.getElementById("lettersGuessed");
 var refGuessesRemaining = document.getElementById("guessesRemaining");
 var refCharacterName = document.getElementById("characterName");
 var refGameWins = document.getElementById("gameWins");
+var refLeftSide = document.getElementById("leftSide");
+var refBackgroundMusic = document.getElementById("backgroundMusic");
+var refWinSound = document.getElementById("winSound");
+var refWinSource = document.getElementById("winSource");
 var computerWord = randWord();													// Computer chooses a character
 console.log("The computer chose " + computerWord);
 var workingArray = [];
@@ -179,33 +183,51 @@ document.onkeyup = function(event) {
 			if (didTheyGuessRight()) {
 				if (computerWord[0] === "P") {
 					refCharacterName.innerHTML = "Princess Leia"
-					// update leftSide with Princess Leia
-					// Play Leia sound
+					refLeftSide.innerHTML = '<img src="assets/images/Leia.jpg" width=298px height=406px>'
+					document.getElementById("backgroundMusic").pause();
+					document.getElementById('winSound').src = 'assets/sounds/Leia.mp3';
+					document.getElementById("winSound").play();
+					refWinSound.onended = function() {document.getElementById("backgroundMusic").play();};
 				}
 					else if (computerWord[0] === "Q") {
 						refCharacterName.innerHTML = "Queen Amidala"
-						// update leftSide with Queen Amidala
-						// Play Amidala sound
+						refLeftSide.innerHTML = '<img src="assets/images/Amidala.jpg" width=298px height=406px>'
+						document.getElementById("backgroundMusic").pause();
+						document.getElementById('winSound').src = 'assets/sounds/Amidala.mp3';
+						document.getElementById("winSound").play();
+						refWinSound.onended = function() {document.getElementById("backgroundMusic").play();};
 					}
 						else if (computerWord[0] === "L") {
 							refCharacterName.innerHTML = "Luke Skywalker"
-							// update leftSide with Luke Skywalker
-							// Play Luke sound
+							refLeftSide.innerHTML = '<img src="assets/images/Luke.jpg" width=298px height=406px>'
+							document.getElementById("backgroundMusic").pause();
+							document.getElementById('winSound').src = 'assets/sounds/Luke.mp3';
+							document.getElementById("winSound").play();
+							refWinSound.onended = function() {document.getElementById("backgroundMusic").play();};
 						}
 							else if (computerWord[0] === "C") {
 								refCharacterName.innerHTML = "Chewbacca"
-								// update leftSide with Chewbacca
-								// Play Chewbacca sound
+								refLeftSide.innerHTML = '<img src="assets/images/Chewbacca.png" width=298px height=406px>'
+								document.getElementById("backgroundMusic").pause();
+								document.getElementById('winSound').src = 'assets/sounds/Chewbacca.mp3';
+								document.getElementById("winSound").play();
+								refWinSound.onended = function() {document.getElementById("backgroundMusic").play();};
 							}
 								else if (computerWord[0] == "D") {
 									refCharacterName.innerHTML = "Darth Vader"
-									// update leftSide with Darth Vader
-									// Play Vader sound
+									refLeftSide.innerHTML = '<img src="assets/images/Vader.jpg" width=298px height=406px>'
+									document.getElementById("backgroundMusic").pause();
+									document.getElementById('winSound').src = 'assets/sounds/Vader.mp3';
+									document.getElementById("winSound").play();
+									refWinSound.onended = function() {document.getElementById("backgroundMusic").play();};
 								}
 									else {
 										refCharacterName.innerHTML = "Boba Fett"
-										// update leftSide with Boba Fett
-										// Play Boba sound
+										refLeftSide.innerHTML = '<img src="assets/images/Boba.png" width=298px height=406px>'
+										document.getElementById("backgroundMusic").pause();
+										document.getElementById('winSound').src = 'assets/sounds/Boba.mp3';
+										document.getElementById("winSound").play();
+										refWinSound.onended = function() {document.getElementById("backgroundMusic").play();};
 									}
 				refGameWins.innerHTML = ++wins;
 				resetGame();
