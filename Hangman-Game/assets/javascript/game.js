@@ -55,10 +55,10 @@ var refWinSound = document.getElementById("winSound");
 var refWinSource = document.getElementById("winSource");
 var computerWord = randWord();													// Computer chooses a character
 console.log("The computer chose " + computerWord);
-var workingArray = [];
-var guessArray = [];
+var workingArray = [];															// This is the array showing what letters are correct, set to blank
+var guessArray = [];															// This is the Letters Guessed array, set to blank
 var guessesLeft = 15;															// Start with 15 guesses
-var wins = 0;
+var wins = 0;																	// Start with no wins
 
 
 
@@ -67,7 +67,7 @@ var wins = 0;
 // Functions second
 
 
-function randWord() {
+function randWord() {															// This function generates a random word to guess
 
 	var words = ["Princess Leia","Queen Amidala","Luke Skywalker","Chewbacca","Darth Vader","Boba Fett"];
 
@@ -76,7 +76,7 @@ function randWord() {
 }
 
 
-function isGuessLegit(letterGuess) {
+function isGuessLegit(letterGuess) {											// This function determines if the User Guess is a lowercase letter
 	
 	var letters = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
 	
@@ -84,7 +84,7 @@ function isGuessLegit(letterGuess) {
 }
 
 
-function pushWorkingArray () {
+function pushWorkingArray () {													// This function pushes the Working Array to the screen
 	refWordResults.innerHTML = "";
 	for (i=0; i < workingArray.length; i++) {
 		refWordResults.innerHTML = refWordResults.innerHTML + "&nbsp;" + workingArray[i];
@@ -93,7 +93,7 @@ function pushWorkingArray () {
 }
 
 
-function pushLettersGuessed () {
+function pushLettersGuessed () {												// This function pushes the Guess Array to the screen
 	refLettersGuessed.innerHTML = "";
 	for (i=0; i < guessArray.length; i++) {
 		refLettersGuessed.innerHTML = refLettersGuessed.innerHTML + "&nbsp;" + guessArray[i];
@@ -118,7 +118,7 @@ function setupWorkingSection(challengeWord) {												// This function sets t
 
 }
 
-function isGuessInWord(checkLetter, challengeWord) {										// This functions determines if the letter is in the word
+function isGuessInWord(checkLetter, challengeWord) {										// This function determines if the letter is in the word
 	for (i=0; i < challengeWord.length; i++) {
 		if (challengeWord.charAt(i).toLowerCase() === checkLetter) {
 			workingArray[i] = challengeWord.charAt(i);
@@ -129,7 +129,7 @@ function isGuessInWord(checkLetter, challengeWord) {										// This functions 
 }
 
 
-function isGuessInLettersGuessed(checkLetter, letterArray) {
+function isGuessInLettersGuessed(checkLetter, letterArray) {								// This function determines if the letter has already been guessed
 	var gotAHit = false;
 	for (i=0; (!gotAHit && (i < letterArray.length)); i++) {
 		if (letterArray[i] === checkLetter) {
@@ -139,13 +139,12 @@ function isGuessInLettersGuessed(checkLetter, letterArray) {
 	return gotAHit;
 }
 
-function putGuessInArray(guessLetter) {
+function putGuessInArray(guessLetter) {														// This function pushes the guess into the Letters Guessed Array
 	guessArray.push(guessLetter);
-	
-	pushLettersGuessed();
+	pushLettersGuessed();																	// And then pushes the Letters Guessed array to the screen
 }
 
-function didTheyGuessRight() {
+function didTheyGuessRight() {																// This function determines if the guess is in the word
 	var gotItRight = true;
 	for (i=0; (gotItRight && (i < computerWord.length)); i++) {
 		if (computerWord[i] !== workingArray[i]) {
@@ -155,13 +154,17 @@ function didTheyGuessRight() {
 	return gotItRight;
 }
 
-function resetGame() {
-	computerWord = randWord();
-	setupWorkingSection(computerWord);
-	guessArray=[];
-	pushLettersGuessed();
-	guessesLeft = 15;
-	refGuessesRemaining.innerHTML = guessesLeft;
+function resetGame() {																		// This function resets the game after a win or loss
+	var newComputerWord = randWord();														// Get a new word
+	while (newComputerWord === computerWord) {												// While the new word is the same as the old word...
+		newComputerWord = randWord();														// Get a new word...
+	}
+	computerWord = newComputerWord;															// And then set that to the Computer Word
+	setupWorkingSection(computerWord);														// Clear the Working Section
+	guessArray=[];																			// Clear the Letters Guessed Array
+	pushLettersGuessed();																	// Push the Letters Guessed
+	guessesLeft = 15;																		// Reset the number of guesses
+	refGuessesRemaining.innerHTML = guessesLeft;											// Push the number of guesses to the screen
 }
 
 
@@ -175,14 +178,14 @@ document.onkeyup = function(event) {
 
 	document.onkeyup = function(event) {
 		var userGuess = event.key;															// Get the user's guess
-		if (isGuessLegit(userGuess) && !isGuessInLettersGuessed(userGuess, guessArray) && guessesLeft !== 0) {	// If it's a lowercase letter and not in list
-			putGuessInArray(userGuess);
-			isGuessInWord(userGuess, computerWord);
-			refGuessesRemaining.innerHTML = --guessesLeft;
+		if (isGuessLegit(userGuess) && !isGuessInLettersGuessed(userGuess, guessArray) && guessesLeft !== 0) {	// If lowercase, not guessed, and still playing
+			putGuessInArray(userGuess);														// Put the letter in Letters Guessed
+			isGuessInWord(userGuess, computerWord);											// Check to see if it's in the word
+			refGuessesRemaining.innerHTML = --guessesLeft;									// Decrement guesses left
 			console.log ("Did they guess right? " + didTheyGuessRight());
-			if (didTheyGuessRight()) {
-				if (computerWord[0] === "P") {
-					refCharacterName.innerHTML = "Princess Leia"
+			if (didTheyGuessRight()) {														// If they guessed the word
+				if (computerWord[0] === "P") {												// These could be better handled as objects and functions....
+					refCharacterName.innerHTML = "Princess Leia"							// But we hadn't reached that yet and I wanted to get it done
 					refLeftSide.innerHTML = '<img src="assets/images/Leia.jpg" width=298px height=406px>'
 					document.getElementById("backgroundMusic").pause();
 					document.getElementById('winSound').src = 'assets/sounds/Leia.mp3';
@@ -232,7 +235,7 @@ document.onkeyup = function(event) {
 				refGameWins.innerHTML = ++wins;
 				resetGame();
 			}
-				else if (guessesLeft === 0) {
+				else if (guessesLeft === 0) {												// Otherwise, you lost
 					refCharacterName.innerHTML = "No!";
 					resetGame();
 				}
